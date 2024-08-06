@@ -40,3 +40,9 @@
     font-weight: 800;
 }
 
+.custom-toast {
+    font-family: estedad , sans-serif !important; /* تغییر فونت */
+    font-size: 16px; /* تغییر اندازه فونت */
+    color: #333; /* تغییر رنگ متن */
+    /* می‌توانید سایر استایل‌ها را نیز به دلخواه اضافه کنید */
+}
