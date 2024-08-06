@@ -1,7 +1,5 @@
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-
-// تعریف نوع برای Permissions
 type Permission =
     | "users"
     | "user"
@@ -24,7 +22,8 @@ type Permission =
     | "credits"
     | "create-credit"
     | "edit-credit"
-    | "delete-credit";
+    | "delete-credit"
+    | "";
 
 // تعریف interface برای شیء نتیجه
 interface UserCredentials {
@@ -32,26 +31,48 @@ interface UserCredentials {
     permissions: Permission[];
 }
 
+interface UserContextType {
+    user: UserCredentials | null;
+    setUser: (user: UserCredentials | null) => void;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
+}
+
+interface UserProviderProps {
+    children: ReactNode;
+}
+
+const UserContext = createContext<UserContextType | undefined>(undefined);
+
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 
-// مقدار پیش‌فرض برای Context
-const UserContext = createContext<UserCredentials | undefined>(undefined);
+    const token = sessionStorage.getItem('token');
+    // @ts-ignore
+    const permissions = sessionStorage.getItem('permissions')?.split(',')
 
-export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<string | null>(null);
+    // check and verify token
+    // if token is invalid
+    // router.push('auth/signin')
+    // sesstionstorage.claer()
+
+    // if verify token is true ....
+    const [user, setUser] = useState<UserCredentials | null>({
+        token : token  ?? "",
+        permissions : permissions  ?? [""]
+    });
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, loading, setLoading }}>
             {children}
         </UserContext.Provider>
     );
 };
 
-
-// Hook برای استفاده از Context
-export const useUser = () => {
+export const useUser = (): UserContextType => {
     const context = useContext(UserContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error('useUser must be used within a UserProvider');
     }
     return context;

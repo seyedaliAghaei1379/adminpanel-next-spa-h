@@ -1,5 +1,7 @@
+'use client';
 import "@/css/satoshi.css";
 import "@/css/style.css";
+import {UserProvider} from "../../context/UserContext";
 
 export default function RootLayout({
                                        children,
@@ -8,8 +10,11 @@ export default function RootLayout({
 }>) {
     return (
 
-        <html lang="fa" dir={"rtl"}>
-        <body suppressHydrationWarning={true}>{children}</body>
-        </html>
+        <UserProvider>
+            <html lang="fa" dir={"rtl"}>
+            <body suppressHydrationWarning={true}>{children}</body>
+            </html>
+        </UserProvider>
+
     );
 }
