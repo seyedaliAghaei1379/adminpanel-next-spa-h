@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 type Permission =
     | "users"
@@ -45,24 +45,24 @@ interface UserProviderProps {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+    const [user, setUser] = useState<UserCredentials | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
-
-    const token = sessionStorage.getItem('token');
-    // @ts-ignore
-    const permissions = sessionStorage.getItem('permissions')?.split(',')
-
-    // check and verify token
-    // if token is invalid
-    // router.push('auth/signin')
-    // sesstionstorage.claer()
-
-    // if verify token is true ....
-    // @ts-ignore
-    const [user, setUser] = useState<UserCredentials | null>({
-        token : token  ?? "",
-        permissions : permissions  ?? [""]
-    });
-    const [loading, setLoading] = useState<boolean>(false);
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        const permissions = sessionStorage.getItem('permissions');
+        if (token && permissions) {
+            setUser({
+                token: token,
+                permissions: permissions.split(',') as Permission[],
+            });
+        } else {
+            // در صورت نیاز می‌توانید به صفحه ورود کاربر هدایت کنید
+            // router.push('auth/signin')
+            // sessionStorage.clear()
+        }
+        setLoading(false);
+    }, []);
 
     return (
         <UserContext.Provider value={{ user, setUser, loading, setLoading }}>

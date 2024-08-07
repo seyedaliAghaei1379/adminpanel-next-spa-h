@@ -27,10 +27,11 @@ const UserCategory = () => {
                 }
             )
                 .then(result => {
-                    // console.log('Success:', result);
+                    resetForm()
+
+                    console.log('Success:', result);
                     // toast.success("دسته بندی با موفقیت ساخته شد")
                     // Perform additional actions if needed
-                    resetForm()
                 })
                 .catch(error => {
                     console.error('Error:', error);
