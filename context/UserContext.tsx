@@ -57,6 +57,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     // sesstionstorage.claer()
 
     // if verify token is true ....
+    // @ts-ignore
     const [user, setUser] = useState<UserCredentials | null>({
         token : token  ?? "",
         permissions : permissions  ?? [""]
