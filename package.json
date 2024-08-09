@@ -11,6 +11,7 @@
     "deploy": "npm run build && gh-pages -d out"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.23",
     "apexcharts": "^3.45.2",
     "axios": "^1.7.3",
     "cookie": "^0.6.0",

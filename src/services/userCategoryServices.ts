@@ -31,4 +31,36 @@ export const createUserCategories = async  (categoryName : {name : string}) => {
     })
     return response.data
 }
+export const getUserCategories = async  () => {
+    const token = sessionStorage.getItem('token')
+
+    const response = await axios.get(`${BASE_URL}/user_categories?include=users` ,   {
+        headers : {
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    return response.data
+}
+export const updateUserCategory = async  (id : number , name : {name : string} ) => {
+    const token = sessionStorage.getItem('token')
+
+    const response = await axios.put(`${BASE_URL}/user_categories/${id}?include=users` , name ,{
+        headers : {
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    return response.data
+}
+export const userCategory = async  (id : number) => {
+    const token = sessionStorage.getItem('token')
+
+    const response = await axios.get(`${BASE_URL}/user_categories/${id}?include=users` , {
+        headers : {
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    return response.data
+}
+
+
 
