@@ -61,6 +61,16 @@ export const userCategory = async  (id : number) => {
     })
     return response.data
 }
+export const deleteUserCategory = async  (id : number) => {
+    const token = sessionStorage.getItem('token')
+
+    const response = await axios.delete(`${BASE_URL}/user_categories/${id}` , {
+        headers : {
+            "Authorization" : `Bearer ${token}`
+        }
+    })
+    return response.data
+}
 
 
 
